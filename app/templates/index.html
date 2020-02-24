@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+    {% if current_user.is_anonymous %}
+    <h3>Hi, guest!</h3>
+    {% else %}
+    <h3>Hi, {{ current_user.username }}!</h3>
+
+
+
+    {% if form %}
+    <form action="" method="post">
+
+        {{ form.hidden_tag() }}
+        <p>
+            {{ form.post.label }}<br>
+            {{ form.post(cols=32, rows=4) }}<br>
+            {% for error in form.post.errors %}
+            <span style="color: red;">[{{ error }}]</span>
+            {% endfor %}
+        </p>
+        <p>{{ form.submit() }}</p>
+
+    </form>
+    {% endif %}
+
+    </form>
+    {% endif %}
+    {% for post in posts %}
+        {% include '_post.html' %}
+    {% endfor %}
+    {% if prev_url %}
+    <a href="{{ prev_url }}">Back</a>
+    {% endif %}
+    {% if next_url %}
+    <a href="{{ next_url }}">Next</a>
+    {% endif %}
+{% endblock %}

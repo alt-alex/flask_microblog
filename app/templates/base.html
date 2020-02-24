@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+
+  {% if title %}
+  <title>{{ title }} - Microblog</title>
+  {% else %}
+  <title>Welcome to Microblog</title>
+  {% endif %}
+
+
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <style>
+        body {
+          margin: 0;
+          font-family: Arial, Helvetica, sans-serif;
+        }
+
+        .background {
+          background-image: url("/static/back.jpg");
+          background-color: #EAEDED;
+          height: 700px;
+          background-position: center;
+          background-repeat: no-repeat;
+          background-size: cover;
+          position: relative;
+        }
+
+
+        .text {
+          margin-right: 150px;
+          margin-left: 10px;
+          color: #2E4053;
+        }
+
+        </style>
+        
+            Navigation > 
+            <a href="{{ url_for('index') }}">Home</a>
+            {% if current_user.is_anonymous %}
+            <a href="{{ url_for('login') }}">Login</a>
+            {% else %}
+            <a href="{{ url_for('user', username=current_user.username) }}">Profile</a>
+            <a href="{{ url_for('explore') }}">Explore</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+            {% endif %}
+        
+    </head>
+
+
+
+
+
+    <body>
+
+    <div class="background">
+
+    <div class="text">
+    
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul>
+            {% for message in messages %}
+            <li>{{ message }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        {% block content %}{% endblock %}
+    </div>
+    </body>
+</html>
